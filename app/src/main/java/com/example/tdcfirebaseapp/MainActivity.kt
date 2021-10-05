@@ -38,14 +38,28 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupDrawerLayout() {
+        val navigationView = binding.navigationView
+        val toolbar = binding.topAppBar
+
         navController = findNavController(layout)
         drawerLayout = binding.drawerLayout
-        binding.navigationView.setupWithNavController(navController)
-        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
+        navigationView.setupWithNavController(navController)
+
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_tasks,
+                R.id.navigation_done_tasks,
+                R.id.navigation_profile
+            ),
+            drawerLayout
+        )
+
+        toolbar.setupWithNavController(navController, appBarConfiguration)
+        navigationView.setCheckedItem(R.id.navigation_tasks)
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return NavigationUI.navigateUp(navController, drawerLayout)
+        return findNavController(layout).navigateUp(appBarConfiguration)
     }
 
     override fun onBackPressed() {

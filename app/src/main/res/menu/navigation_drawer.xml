@@ -12,12 +12,14 @@
                 <item
                     android:id="@+id/navigation_tasks"
                     android:icon="@drawable/ic_baseline_check_box_outline_blank_24"
-                    android:title="@string/title_tasks_pending" />
+                    android:title="@string/title_tasks_pending"
+                    android:checkable="true"/>
 
                 <item
                     android:id="@+id/navigation_done_tasks"
                     android:icon="@drawable/ic_baseline_check_24"
-                    android:title="@string/title_tasks_done" />
+                    android:title="@string/title_tasks_done"
+                    android:checkable="true"/>
 
             </menu>
 
@@ -36,7 +38,8 @@
                 <item
                     android:id="@+id/navigation_profile"
                     android:icon="@drawable/ic_baseline_person_24"
-                    android:title="@string/title_profile" />
+                    android:title="@string/title_profile"
+                    android:checkable="true"/>
 
             </menu>
 
