@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/group01"
+        android:checkableBehavior="single">
+
+        <item android:title="@string/title_tasks">
+
+            <menu>
+
+                <item
+                    android:id="@+id/navigation_tasks"
+                    android:icon="@drawable/ic_baseline_check_box_outline_blank_24"
+                    android:title="@string/title_tasks_pending" />
+
+                <item
+                    android:id="@+id/navigation_done_tasks"
+                    android:icon="@drawable/ic_baseline_check_24"
+                    android:title="@string/title_tasks_done" />
+
+            </menu>
+
+        </item>
+
+    </group>
+
+    <group
+        android:id="@+id/group02"
+        android:checkableBehavior="single">
+
+        <item android:title="@string/title_account">
+
+            <menu>
+
+                <item
+                    android:id="@+id/navigation_profile"
+                    android:icon="@drawable/ic_baseline_person_24"
+                    android:title="@string/title_profile" />
+
+            </menu>
+
+        </item>
+
+    </group>
+
+</menu>

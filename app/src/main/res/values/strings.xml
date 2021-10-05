@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">TDC Firebase App</string>
+    <string name="title_tasks">Tarefas</string>
+    <string name="title_tasks_pending">Pendentes</string>
+    <string name="title_tasks_done">Concluídas</string>
+    <string name="title_account">Conta</string>
+    <string name="title_profile">Perfil</string>
+    <string name="desc_add_task">Adicionar Tarefa</string>
+    <string name="open_drawer">Abrir</string>
+    <string name="close_drawer">Fechar</string>
+</resources>
