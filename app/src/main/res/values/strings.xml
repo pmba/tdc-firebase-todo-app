@@ -8,4 +8,10 @@
     <string name="desc_add_task">Adicionar Tarefa</string>
     <string name="open_drawer">Abrir</string>
     <string name="close_drawer">Fechar</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Senha</string>
+    <string name="sign_in_hint">Entrar</string>
+    <string name="forgot_password_hint">Esqueceu a senha?</string>
+    <string name="or_hint">ou</string>
+    <string name="sign_up_hint">Criar conta</string>
 </resources>
