@@ -12,12 +12,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.example.tdcfirebaseapp.databinding.ActivityMainBinding
 import com.example.tdcfirebaseapp.pages.login.LoginActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
-
-    companion object {
-        val isUserLoggedIn = true
-    }
 
     private lateinit var binding: ActivityMainBinding
 
@@ -29,6 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         checkForUserLoggedIn()
+
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -71,6 +69,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkForUserLoggedIn() {
+        val isUserLoggedIn = FirebaseAuth.getInstance().currentUser != null
+
         if (!isUserLoggedIn) {
             val loginIntent = Intent(this, LoginActivity::class.java)
 

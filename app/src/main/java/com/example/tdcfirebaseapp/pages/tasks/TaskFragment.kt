@@ -8,20 +8,20 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tdcfirebaseapp.R
-import com.example.tdcfirebaseapp.databinding.FragmentTaskListBinding
+import com.example.tdcfirebaseapp.databinding.FragmentTaskBinding
 import com.example.tdcfirebaseapp.pages.tasks.adapters.TodoTaskRecyclerViewAdapter
 import com.example.tdcfirebaseapp.pages.tasks.models.Task
 import com.google.android.material.appbar.MaterialToolbar
 
 class TaskFragment : Fragment() {
 
-    private lateinit var binding: FragmentTaskListBinding
+    private lateinit var binding: FragmentTaskBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentTaskListBinding.inflate(inflater, container, false)
+        binding = FragmentTaskBinding.inflate(inflater, container, false)
 
         initRecyclerView()
 

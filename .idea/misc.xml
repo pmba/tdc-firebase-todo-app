@@ -7,6 +7,7 @@
         <entry key="app/src/main/res/drawable/ic_baseline_check_box_24.xml" value="0.37395833333333334" />
         <entry key="app/src/main/res/drawable/ic_baseline_check_box_outline_blank_24.xml" value="0.37395833333333334" />
         <entry key="app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.37395833333333334" />
+        <entry key="app/src/main/res/drawable/ic_logo.xml" value="0.37447916666666664" />
         <entry key="app/src/main/res/drawable/list_header_background.xml" value="0.21614583333333334" />
         <entry key="app/src/main/res/drawable/shape.xml" value="0.37395833333333334" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.3578125" />
@@ -15,6 +16,7 @@
         <entry key="app/src/main/res/layout/fragment_done_task.xml" value="0.3578125" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.3768518518518518" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.3578125" />
+        <entry key="app/src/main/res/layout/fragment_task.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/layout/fragment_task_item.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_task_list.xml" value="0.3578125" />
         <entry key="app/src/main/res/layout/fragment_task_todo.xml" value="0.3578125" />
