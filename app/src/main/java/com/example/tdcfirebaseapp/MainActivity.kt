@@ -69,6 +69,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkForUserLoggedIn() {
+        FirebaseAuth.getInstance().signOut()
         val isUserLoggedIn = FirebaseAuth.getInstance().currentUser != null
 
         if (!isUserLoggedIn) {
