@@ -1,18 +1,18 @@
-package com.example.tdcfirebaseapp.pages.login.viewmodels
+package com.example.tdcfirebaseapp.pages.auth.login.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.tdcfirebaseapp.pages.login.contracts.AuthContract
-import com.example.tdcfirebaseapp.pages.login.repositories.AuthRepository
+import com.example.tdcfirebaseapp.pages.auth.shared.contracts.AuthContract
+import com.example.tdcfirebaseapp.pages.auth.login.repositories.LoginRepository
 
 class LoginViewModel: ViewModel() {
     private val mIsLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     private val mHasLoggedIn: MutableLiveData<Boolean> = MutableLiveData(false)
     private val mHasErrors: MutableLiveData<Exception> = MutableLiveData()
 
-    private val mRepo = AuthRepository.Instance
+    private val mRepo = LoginRepository.Instance
 
     fun isLoading(): LiveData<Boolean> = mIsLoading
     fun hasLoggedIn(): LiveData<Boolean> = mHasLoggedIn

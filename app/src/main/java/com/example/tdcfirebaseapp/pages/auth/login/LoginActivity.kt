@@ -1,18 +1,16 @@
-package com.example.tdcfirebaseapp.pages.login
+package com.example.tdcfirebaseapp.pages.auth.login
 
-import android.app.Activity
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
-import androidx.fragment.app.Fragment
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import com.example.tdcfirebaseapp.R
 import com.example.tdcfirebaseapp.databinding.ActivityLoginBinding
-import com.example.tdcfirebaseapp.pages.login.viewmodels.LoginViewModel
+import com.example.tdcfirebaseapp.pages.auth.login.viewmodels.LoginViewModel
+import com.example.tdcfirebaseapp.pages.auth.shared.utils.hideKeyboard
+import com.example.tdcfirebaseapp.pages.auth.signup.SignUpActivity
 import com.google.android.material.snackbar.Snackbar
 
 class LoginActivity : AppCompatActivity() {
@@ -21,12 +19,36 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var mViewModel: LoginViewModel
 
+    private val signUpResultLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        Log.d("LoginActivity", "setupSignUpButton : ${result.resultCode}")
+        if (result.resultCode == RESULT_OK) {
+            setResult(RESULT_OK)
+            finish()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupViewModel()
+        setupSignInButton()
+        setupSignUpButton()
+    }
+
+    private fun setupSignUpButton() {
+        binding.createAccountButton.setOnClickListener {
+            Log.d("LoginActivity", "setupSignUpButton : createAccountButton.setOnClickListener()")
+            val signUpIntent = Intent(this, SignUpActivity::class.java)
+            signUpResultLauncher.launch(signUpIntent)
+        }
+    }
+
+    private fun setupViewModel() {
         mViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
 
         mViewModel.isLoading().observe(this) { isLoading ->
@@ -49,12 +71,10 @@ class LoginActivity : AppCompatActivity() {
 
         mViewModel.hasLoggedIn().observe(this) { hasLoggedIn ->
             if (hasLoggedIn) {
-                setResult(Activity.RESULT_OK)
+                setResult(RESULT_OK)
                 finish()
             }
         }
-
-        setupSignInButton()
     }
 
     private fun setupSignInButton() {
@@ -66,15 +86,5 @@ class LoginActivity : AppCompatActivity() {
 
             mViewModel.loginWithEmailAndPassword(email, password)
         }
-    }
-
-
-    private fun Activity.hideKeyboard() {
-        hideKeyboard(currentFocus ?: View(this))
-    }
-
-    private fun Context.hideKeyboard(view: View) {
-        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }

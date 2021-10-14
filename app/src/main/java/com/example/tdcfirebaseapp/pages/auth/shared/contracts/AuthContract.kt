@@ -1,6 +1,5 @@
-package com.example.tdcfirebaseapp.pages.login.contracts
+package com.example.tdcfirebaseapp.pages.auth.shared.contracts
 
-import com.google.firebase.auth.FirebaseUser
 import java.lang.Exception
 
 interface AuthContract {

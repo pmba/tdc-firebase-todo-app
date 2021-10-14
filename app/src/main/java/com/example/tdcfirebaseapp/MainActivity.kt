@@ -2,7 +2,6 @@ package com.example.tdcfirebaseapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Gravity
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -11,7 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.example.tdcfirebaseapp.databinding.ActivityMainBinding
-import com.example.tdcfirebaseapp.pages.login.LoginActivity
+import com.example.tdcfirebaseapp.pages.auth.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
