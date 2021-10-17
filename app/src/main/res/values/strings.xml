@@ -16,4 +16,8 @@
     <string name="or_hint">ou</string>
     <string name="sign_up_hint">Criar conta</string>
     <string name="title_create_account">Criar conta</string>
+    <string name="title_forgot_password">Esqueci a senha</string>
+    <string name="description_forgot_password">Entre com o email cadastrado, enviaremos um link de redefinição de senha para o seu email</string>
+    <string name="title_forgot_password_dialog">Quase lá</string>
+    <string name="message_forgot_password_dialog">Enviamos um email para redefinição de senha para seu email, por favor cheque sua caixa de entrada.</string>
 </resources>

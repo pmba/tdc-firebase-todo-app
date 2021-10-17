@@ -1,4 +1,4 @@
-package com.example.tdcfirebaseapp.pages.auth.shared.utils
+package com.example.tdcfirebaseapp.shared.utils
 
 import android.app.Activity
 import android.content.Context

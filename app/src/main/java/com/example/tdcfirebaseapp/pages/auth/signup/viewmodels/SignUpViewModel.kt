@@ -3,7 +3,7 @@ package com.example.tdcfirebaseapp.pages.auth.signup.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.tdcfirebaseapp.pages.auth.shared.contracts.AuthContract
+import com.example.tdcfirebaseapp.shared.contracts.AuthContract
 import com.example.tdcfirebaseapp.pages.auth.signup.repositories.SignUpRepository
 import java.lang.Exception
 

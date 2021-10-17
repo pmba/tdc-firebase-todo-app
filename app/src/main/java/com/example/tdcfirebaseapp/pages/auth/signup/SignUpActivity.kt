@@ -5,7 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.tdcfirebaseapp.databinding.ActivitySignUpBinding
-import com.example.tdcfirebaseapp.pages.auth.shared.utils.hideKeyboard
+import com.example.tdcfirebaseapp.shared.utils.hideKeyboard
 import com.example.tdcfirebaseapp.pages.auth.signup.viewmodels.SignUpViewModel
 import com.google.android.material.snackbar.Snackbar
 

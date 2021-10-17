@@ -10,6 +10,7 @@
         <entry key="app/src/main/res/drawable/ic_logo.xml" value="0.37447916666666664" />
         <entry key="app/src/main/res/drawable/list_header_background.xml" value="0.21614583333333334" />
         <entry key="app/src/main/res/drawable/shape.xml" value="0.37395833333333334" />
+        <entry key="app/src/main/res/layout/activity_forgot_password.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.3578125" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3428442028985507" />
         <entry key="app/src/main/res/layout/activity_main_backdrop.xml" value="0.2" />

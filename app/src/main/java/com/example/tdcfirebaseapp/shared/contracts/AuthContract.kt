@@ -1,4 +1,4 @@
-package com.example.tdcfirebaseapp.pages.auth.shared.contracts
+package com.example.tdcfirebaseapp.shared.contracts
 
 import java.lang.Exception
 

@@ -1,6 +1,6 @@
 package com.example.tdcfirebaseapp.pages.auth.login.repositories
 
-import com.example.tdcfirebaseapp.pages.auth.shared.contracts.AuthContract
+import com.example.tdcfirebaseapp.shared.contracts.AuthContract
 import com.google.firebase.auth.FirebaseAuth
 import java.lang.Exception
 

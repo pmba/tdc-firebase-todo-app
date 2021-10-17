@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.tdcfirebaseapp.pages.auth.shared.contracts.AuthContract
+import com.example.tdcfirebaseapp.shared.contracts.AuthContract
 import com.example.tdcfirebaseapp.pages.auth.login.repositories.LoginRepository
 
 class LoginViewModel: ViewModel() {
