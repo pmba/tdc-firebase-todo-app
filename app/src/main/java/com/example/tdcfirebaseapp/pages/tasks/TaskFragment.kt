@@ -1,21 +1,26 @@
 package com.example.tdcfirebaseapp.pages.tasks
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.tdcfirebaseapp.R
+import androidx.recyclerview.widget.RecyclerView
 import com.example.tdcfirebaseapp.databinding.FragmentTaskBinding
-import com.example.tdcfirebaseapp.pages.tasks.adapters.TodoTaskRecyclerViewAdapter
-import com.example.tdcfirebaseapp.pages.tasks.models.Task
-import com.google.android.material.appbar.MaterialToolbar
+import com.example.tdcfirebaseapp.pages.tasks.adapters.TaskRecyclerViewAdapter
+import com.example.tdcfirebaseapp.pages.tasks.viewmodels.TaskViewModel
 
 class TaskFragment : Fragment() {
 
     private lateinit var binding: FragmentTaskBinding
+
+    private lateinit var mAdapter: TaskRecyclerViewAdapter
+    private lateinit var mRecyclerView: RecyclerView
+
+    private lateinit var mViewModel: TaskViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,23 +28,31 @@ class TaskFragment : Fragment() {
     ): View {
         binding = FragmentTaskBinding.inflate(inflater, container, false)
 
+        mRecyclerView = binding.taskListRecyclerView
+
+        mViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
+        mViewModel.init()
+
         initRecyclerView()
+        setupViewModel()
 
         return binding.root
     }
 
-    private fun initRecyclerView() {
-        val tasks = IntArray(20).map { index ->
-            Task(
-                title = "Atividade $index",
-                done = false
-            )
+    @SuppressLint("NotifyDataSetChanged")
+    private fun setupViewModel() {
+        mViewModel.getTasks().observe(requireActivity()) { tasks ->
+            mRecyclerView.setItemViewCacheSize(tasks.size)
+            mAdapter.notifyDataSetChanged()
         }
+    }
 
-        val recyclerView = binding.taskListRecyclerView
-        with(recyclerView) {
+    private fun initRecyclerView() {
+        mAdapter = TaskRecyclerViewAdapter(mViewModel.getTasks().value!!)
+
+        with(mRecyclerView) {
             layoutManager = LinearLayoutManager(context)
-            adapter = TodoTaskRecyclerViewAdapter(tasks)
+            adapter = mAdapter
         }
     }
 }

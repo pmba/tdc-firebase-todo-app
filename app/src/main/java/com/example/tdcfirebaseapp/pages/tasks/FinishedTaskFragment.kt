@@ -1,4 +1,4 @@
-package com.example.tdcfirebaseapp.pages.tasksdone
+package com.example.tdcfirebaseapp.pages.tasks
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.tdcfirebaseapp.databinding.FragmentDoneTaskBinding
 
-class DoneTaskFragment : Fragment() {
+class FinishedTaskFragment : Fragment() {
 
     private lateinit var binding: FragmentDoneTaskBinding
 

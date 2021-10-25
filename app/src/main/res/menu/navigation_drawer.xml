@@ -11,12 +11,18 @@
 
                 <item
                     android:id="@+id/navigation_tasks"
+                    android:icon="@drawable/ic_baseline_check_box_24"
+                    android:title="@string/title_tasks_all"
+                    android:checkable="true"/>
+
+                <item
+                    android:id="@+id/navigation_unfinished_tasks"
                     android:icon="@drawable/ic_baseline_check_box_outline_blank_24"
                     android:title="@string/title_tasks_pending"
                     android:checkable="true"/>
 
                 <item
-                    android:id="@+id/navigation_done_tasks"
+                    android:id="@+id/navigation_finished_tasks"
                     android:icon="@drawable/ic_baseline_check_24"
                     android:title="@string/title_tasks_done"
                     android:checkable="true"/>

@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".pages.tasks.FinishedTaskFragment">
+    tools:context=".pages.tasks.UnfinishedTasksFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="TODO" />
+        android:text="@string/hello_blank_fragment" />
 
 </FrameLayout>

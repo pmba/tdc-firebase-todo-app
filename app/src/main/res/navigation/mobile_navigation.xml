@@ -12,10 +12,16 @@
         tools:layout="@layout/fragment_task_item" />
 
     <fragment
-        android:id="@+id/navigation_done_tasks"
-        android:name="com.example.tdcfirebaseapp.pages.tasksdone.DoneTaskFragment"
+        android:id="@+id/navigation_finished_tasks"
+        android:name="com.example.tdcfirebaseapp.pages.tasks.FinishedTaskFragment"
         android:label="@string/title_tasks_done"
         tools:layout="@layout/fragment_done_task" />
+
+    <fragment
+        android:id="@+id/navigation_unfinished_tasks"
+        android:name="com.example.tdcfirebaseapp.pages.tasks.UnfinishedTasksFragment"
+        android:label="@string/title_tasks_done"
+        tools:layout="@layout/fragment_unfinished_tasks" />
 
     <fragment
         android:id="@+id/navigation_profile"

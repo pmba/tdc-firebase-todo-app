@@ -44,7 +44,8 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_tasks,
-                R.id.navigation_done_tasks,
+                R.id.navigation_unfinished_tasks,
+                R.id.navigation_finished_tasks,
                 R.id.navigation_profile
             ),
             drawerLayout
@@ -67,7 +68,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkForUserLoggedIn() {
-        val isUserLoggedIn = false
+        val isUserLoggedIn = true
 
         if (!isUserLoggedIn) {
             val loginIntent = Intent(this, LoginActivity::class.java)
