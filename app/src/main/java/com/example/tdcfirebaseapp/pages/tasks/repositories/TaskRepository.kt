@@ -16,6 +16,11 @@ class TaskRepository {
             return data
         }
 
+        fun addNewTask(task: Task): List<Task> {
+            mTasksList.add(task)
+            return mTasksList
+        }
+
         /**
          * Função mocada para simular que os dados estão sendo pegos do realtime database
          */

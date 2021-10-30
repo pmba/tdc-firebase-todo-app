@@ -23,4 +23,12 @@ class TaskViewModel : ViewModel() {
 
     fun isLoading(): LiveData<Boolean> = mIsLoading
     fun getTasks(): LiveData<List<Task>> = mTasks!!
+
+    fun addNewTask(task: Task) {
+        mIsLoading.value = true
+
+        val currentTasks = mRepo.addNewTask(task)
+        mTasks!!.value = currentTasks
+        mIsLoading.value = false
+    }
 }
