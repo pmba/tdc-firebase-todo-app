@@ -38,6 +38,7 @@ class TaskRecyclerViewAdapter(
             val formatter = SimpleDateFormat("EEEE, dd 'de' MMMM", Locale.ROOT)
             val formattedDate = formatter.format(item.date!!)
             holder.date.text = formattedDate
+            holder.date.visibility = View.VISIBLE
         } else {
             holder.date.visibility = View.GONE
         }
