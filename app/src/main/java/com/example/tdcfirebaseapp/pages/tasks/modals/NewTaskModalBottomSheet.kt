@@ -1,4 +1,4 @@
-package com.example.tdcfirebaseapp.pages.tasks
+package com.example.tdcfirebaseapp.pages.tasks.modals
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,17 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.tdcfirebaseapp.databinding.FragmentNewTaskBinding
 import com.example.tdcfirebaseapp.pages.tasks.models.Task
-import com.example.tdcfirebaseapp.shared.contracts.CreateTaskContract
+import com.example.tdcfirebaseapp.pages.tasks.viewmodels.TaskViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 class NewTaskModalBottomSheet(
-    private val listener: CreateTaskContract
+    private val viewModel: TaskViewModel
 ): BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentNewTaskBinding
@@ -40,7 +39,8 @@ class NewTaskModalBottomSheet(
             }
 
             taskBuilder.setTitle(binding.newTaskTitleTextField.text.toString())
-            listener.onCreateNewTask(taskBuilder.build())
+            taskBuilder.setUid(UUID.randomUUID().toString())
+            viewModel.addNewTask(taskBuilder.build())
             dismiss()
         }
 

@@ -2,6 +2,8 @@ package com.example.tdcfirebaseapp.pages.tasks.repositories
 
 import androidx.lifecycle.MutableLiveData
 import com.example.tdcfirebaseapp.pages.tasks.models.Task
+import java.util.*
+import kotlin.collections.ArrayList
 
 class TaskRepository {
     object Instance {
@@ -21,6 +23,18 @@ class TaskRepository {
             return mTasksList
         }
 
+        fun removeTask(uid: String): List<Task> {
+            val taskToRemove = mTasksList.first { task -> task.uid == uid }
+            mTasksList.remove(taskToRemove)
+            return mTasksList
+        }
+
+        fun updateTask(uid: String, task: Task): List<Task> {
+            val taskIndex = mTasksList.indexOfFirst { it.uid == uid }
+            mTasksList[taskIndex] = task
+            return mTasksList
+        }
+
         /**
          * Função mocada para simular que os dados estão sendo pegos do realtime database
          */
@@ -28,36 +42,43 @@ class TaskRepository {
             mTasksList.clear()
 
             mTasksList.add(Task(
+                uid = UUID.randomUUID().toString(),
                 title = "Criar um método mocado para simular o realtime database",
                 done = true
             ))
 
             mTasksList.add(Task(
+                uid = UUID.randomUUID().toString(),
                 title = "Configurar a exibição das tasks",
                 done = true
             ))
 
             mTasksList.add(Task(
+                uid = UUID.randomUUID().toString(),
                 title = "Integrar o aplicativo com o realtime database",
                 done = false
             ))
 
             mTasksList.add(Task(
+                uid = UUID.randomUUID().toString(),
                 title = "Adicionar tasks ao banco de dados",
                 done = false
             ))
 
             mTasksList.add(Task(
+                uid = UUID.randomUUID().toString(),
                 title = "Carregar as tasks para o aplicativo",
                 done = false
             ))
 
             mTasksList.add(Task(
+                uid = UUID.randomUUID().toString(),
                 title = "Finalizar o aplicativo",
                 done = false
             ))
 
             mTasksList.add(Task(
+                uid = UUID.randomUUID().toString(),
                 title = "Apresentar o aplicativo",
                 done = false
             ))

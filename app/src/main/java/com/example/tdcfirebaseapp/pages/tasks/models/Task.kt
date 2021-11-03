@@ -3,23 +3,27 @@ package com.example.tdcfirebaseapp.pages.tasks.models
 import java.util.*
 
 class Task(
+    val uid: String,
     val title: String,
-    val done: Boolean,
+    var done: Boolean,
     var date: Date? = null,
 ) {
-//    private constructor(builder: Builder) :
 
     class Builder {
+        private var mUid: String? = null
         private var mTitle: String? = null
         private var mDate: Date? = null
 
+        fun setUid(uid: String) = apply { this.mUid = uid }
         fun setTitle(title: String) = apply { this.mTitle = title }
         fun setDate(date: Date?) = apply { this.mDate = date }
 
         @Throws(NullPointerException::class)
         fun build(): Task {
             mTitle!!.let { title ->
-                return Task(title, false, mDate)
+                mUid!!.let { uid ->
+                    return Task(uid, title, false, mDate)
+                }
             }
         }
     }

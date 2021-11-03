@@ -12,11 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tdcfirebaseapp.databinding.FragmentTaskBinding
 import com.example.tdcfirebaseapp.pages.tasks.adapters.TaskRecyclerViewAdapter
+import com.example.tdcfirebaseapp.pages.tasks.modals.EditTaskModalBottomSheet
+import com.example.tdcfirebaseapp.pages.tasks.modals.NewTaskModalBottomSheet
 import com.example.tdcfirebaseapp.pages.tasks.models.Task
 import com.example.tdcfirebaseapp.pages.tasks.viewmodels.TaskViewModel
-import com.example.tdcfirebaseapp.shared.contracts.CreateTaskContract
+import com.example.tdcfirebaseapp.shared.contracts.TaskAdapterContract
 
-class TaskFragment : Fragment(), CreateTaskContract {
+class TaskFragment : Fragment(), TaskAdapterContract {
 
     private lateinit var binding: FragmentTaskBinding
 
@@ -52,7 +54,11 @@ class TaskFragment : Fragment(), CreateTaskContract {
     }
 
     private fun initRecyclerView() {
-        mAdapter = TaskRecyclerViewAdapter(mViewModel.getTasks().value!!)
+        mAdapter = TaskRecyclerViewAdapter(
+            mViewModel.getTasks().value!!,
+            this,
+            requireActivity()
+        )
 
         with(mRecyclerView) {
             layoutManager = LinearLayoutManager(context).apply {
@@ -66,13 +72,14 @@ class TaskFragment : Fragment(), CreateTaskContract {
 
     private fun setupButtons() {
         binding.newTaskButton.setOnClickListener {
-            NewTaskModalBottomSheet(this).show(parentFragmentManager, NewTaskModalBottomSheet.TAG)
+            NewTaskModalBottomSheet(mViewModel)
+                .show(parentFragmentManager, NewTaskModalBottomSheet.TAG)
         }
     }
 
-    override fun onCreateNewTask(task: Task) {
-        Log.d(TAG, "Task add request : $task")
-        mViewModel.addNewTask(task)
+    override fun onEditRequest(task: Task) {
+        EditTaskModalBottomSheet(mViewModel, task)
+            .show(parentFragmentManager, EditTaskModalBottomSheet.TAG)
     }
 
     companion object {

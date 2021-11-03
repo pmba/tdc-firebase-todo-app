@@ -31,4 +31,22 @@ class TaskViewModel : ViewModel() {
         mTasks!!.value = currentTasks
         mIsLoading.value = false
     }
+
+    fun removeTask(uid: String) {
+        mIsLoading.value = true
+
+        val currentTasks = mRepo.removeTask(uid)
+        mTasks!!.value = currentTasks
+
+        mIsLoading.value = false
+    }
+
+    fun updateTask(uid: String, task: Task) {
+        mIsLoading.value = true
+
+        val currentTasks = mRepo.updateTask(uid, task)
+        mTasks!!.value = currentTasks
+
+        mIsLoading.value = false
+    }
 }
