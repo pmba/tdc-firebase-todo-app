@@ -76,6 +76,7 @@ class EditTaskModalBottomSheet(
             }
 
             taskBuilder.setUid(currentTask.uid)
+            taskBuilder.setDone(currentTask.done)
             taskBuilder.setTitle(taskTitle)
 
             viewModel.updateTask(currentTask.uid, taskBuilder.build())
