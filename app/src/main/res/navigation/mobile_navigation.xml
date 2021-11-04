@@ -9,19 +9,50 @@
         android:id="@+id/navigation_tasks"
         android:name="com.example.tdcfirebaseapp.pages.tasks.TaskFragment"
         android:label="@string/title_tasks"
-        tools:layout="@layout/fragment_task_item" />
+        tools:layout="@layout/fragment_task_item" >
+
+        <argument
+            android:name="showAllTasks"
+            app:argType="boolean"
+            android:defaultValue="true"/>
+
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_finished_tasks"
-        android:name="com.example.tdcfirebaseapp.pages.tasks.FinishedTaskFragment"
+        android:name="com.example.tdcfirebaseapp.pages.tasks.TaskFragment"
         android:label="@string/title_tasks_done"
-        tools:layout="@layout/fragment_done_task" />
+        tools:layout="@layout/fragment_task_item" >
+
+        <argument
+            android:name="showAllTasks"
+            app:argType="boolean"
+            android:defaultValue="false"/>
+
+        <argument
+            android:name="showOnlyTasks"
+            app:argType="string"
+            android:defaultValue="finished"/>
+
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_unfinished_tasks"
-        android:name="com.example.tdcfirebaseapp.pages.tasks.UnfinishedTasksFragment"
-        android:label="@string/title_tasks_done"
-        tools:layout="@layout/fragment_unfinished_tasks" />
+        android:name="com.example.tdcfirebaseapp.pages.tasks.TaskFragment"
+        android:label="@string/title_tasks_pending"
+        tools:layout="@layout/fragment_task_item" >
+
+        <argument
+            android:name="showAllTasks"
+            app:argType="boolean"
+            android:defaultValue="false"/>
+
+        <argument
+            android:name="showOnlyTasks"
+            app:argType="string"
+            android:defaultValue="unfinished"/>
+
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_profile"

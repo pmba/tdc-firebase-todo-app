@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.tdcfirebaseapp.pages.tasks.models.Task
 import com.example.tdcfirebaseapp.pages.tasks.repositories.TaskRepository
+import com.example.tdcfirebaseapp.pages.tasks.repositories.TaskRepository.Instance.TaskType
 
 class TaskViewModel : ViewModel() {
     private val mIsLoading: MutableLiveData<Boolean> = MutableLiveData(false)
@@ -13,12 +14,12 @@ class TaskViewModel : ViewModel() {
 
     private val mRepo = TaskRepository.Instance
 
-    fun init() {
+    fun init(typesToLoad: TaskType = TaskType.ALL) {
         if (mTasks != null) {
             return
         }
 
-        mTasks = mRepo.getTasks()
+        mTasks = mRepo.getTasks(typesToLoad)
     }
 
     fun isLoading(): LiveData<Boolean> = mIsLoading

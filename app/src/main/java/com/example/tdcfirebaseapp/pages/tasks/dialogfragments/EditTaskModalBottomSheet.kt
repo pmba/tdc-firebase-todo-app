@@ -1,4 +1,4 @@
-package com.example.tdcfirebaseapp.pages.tasks.modals
+package com.example.tdcfirebaseapp.pages.tasks.dialogfragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

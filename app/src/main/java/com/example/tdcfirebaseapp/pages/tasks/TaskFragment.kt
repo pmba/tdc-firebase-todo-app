@@ -2,7 +2,6 @@ package com.example.tdcfirebaseapp.pages.tasks
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,11 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tdcfirebaseapp.databinding.FragmentTaskBinding
 import com.example.tdcfirebaseapp.pages.tasks.adapters.TaskRecyclerViewAdapter
-import com.example.tdcfirebaseapp.pages.tasks.modals.EditTaskModalBottomSheet
-import com.example.tdcfirebaseapp.pages.tasks.modals.NewTaskModalBottomSheet
+import com.example.tdcfirebaseapp.pages.tasks.dialogfragments.EditTaskModalBottomSheet
+import com.example.tdcfirebaseapp.pages.tasks.dialogfragments.NewTaskModalBottomSheet
 import com.example.tdcfirebaseapp.pages.tasks.models.Task
+import com.example.tdcfirebaseapp.pages.tasks.repositories.TaskRepository
+import com.example.tdcfirebaseapp.pages.tasks.repositories.TaskRepository.Instance.TaskType
 import com.example.tdcfirebaseapp.pages.tasks.viewmodels.TaskViewModel
 import com.example.tdcfirebaseapp.shared.contracts.TaskAdapterContract
+import kotlin.properties.Delegates
 
 class TaskFragment : Fragment(), TaskAdapterContract {
 
@@ -27,6 +29,18 @@ class TaskFragment : Fragment(), TaskAdapterContract {
 
     private lateinit var mViewModel: TaskViewModel
 
+    private var showAllTasks by Delegates.notNull<Boolean>()
+    private var showOnlyTasks: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        arguments?.let { args ->
+            showAllTasks = args.getBoolean("showAllTasks")
+            showOnlyTasks = args.getString("showOnlyTasks")
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,7 +50,14 @@ class TaskFragment : Fragment(), TaskAdapterContract {
         mRecyclerView = binding.taskListRecyclerView
 
         mViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
-        mViewModel.init()
+
+        val typesToLoad = when {
+            showAllTasks -> TaskType.ALL
+            showOnlyTasks == "finished" -> TaskType.FINISHED
+            else -> TaskType.UNFINISHED
+        }
+
+        mViewModel.init(typesToLoad)
 
         initRecyclerView()
         setupButtons()

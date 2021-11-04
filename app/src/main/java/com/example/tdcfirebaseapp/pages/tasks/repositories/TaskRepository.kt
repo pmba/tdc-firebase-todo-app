@@ -9,8 +9,8 @@ class TaskRepository {
     object Instance {
         private val mTasksList: ArrayList<Task> = ArrayList()
 
-        fun getTasks(): MutableLiveData<List<Task>> {
-            loadTasksFromDatabase()
+        fun getTasks(typesToLoad: TaskType): MutableLiveData<List<Task>> {
+            loadTasksFromDatabase(typesToLoad)
 
             val data: MutableLiveData<List<Task>> = MutableLiveData()
             data.value = mTasksList
@@ -38,50 +38,58 @@ class TaskRepository {
         /**
          * Função mocada para simular que os dados estão sendo pegos do realtime database
          */
-        private fun loadTasksFromDatabase() {
+        private fun loadTasksFromDatabase(typesToLoad: TaskType) {
             mTasksList.clear()
 
-            mTasksList.add(Task(
-                uid = UUID.randomUUID().toString(),
-                title = "Criar um método mocado para simular o realtime database",
-                done = true
-            ))
+            if (typesToLoad == TaskType.ALL || typesToLoad == TaskType.FINISHED) {
+                mTasksList.add(Task(
+                    uid = UUID.randomUUID().toString(),
+                    title = "Criar um método mocado para simular o realtime database",
+                    done = true
+                ))
 
-            mTasksList.add(Task(
-                uid = UUID.randomUUID().toString(),
-                title = "Configurar a exibição das tasks",
-                done = true
-            ))
+                mTasksList.add(Task(
+                    uid = UUID.randomUUID().toString(),
+                    title = "Configurar a exibição das tasks",
+                    done = true
+                ))
+            }
 
-            mTasksList.add(Task(
-                uid = UUID.randomUUID().toString(),
-                title = "Integrar o aplicativo com o realtime database",
-                done = false
-            ))
+            if (typesToLoad == TaskType.ALL || typesToLoad == TaskType.UNFINISHED) {
+                mTasksList.add(Task(
+                    uid = UUID.randomUUID().toString(),
+                    title = "Integrar o aplicativo com o realtime database",
+                    done = false
+                ))
 
-            mTasksList.add(Task(
-                uid = UUID.randomUUID().toString(),
-                title = "Adicionar tasks ao banco de dados",
-                done = false
-            ))
+                mTasksList.add(Task(
+                    uid = UUID.randomUUID().toString(),
+                    title = "Adicionar tasks ao banco de dados",
+                    done = false
+                ))
 
-            mTasksList.add(Task(
-                uid = UUID.randomUUID().toString(),
-                title = "Carregar as tasks para o aplicativo",
-                done = false
-            ))
+                mTasksList.add(Task(
+                    uid = UUID.randomUUID().toString(),
+                    title = "Carregar as tasks para o aplicativo",
+                    done = false
+                ))
 
-            mTasksList.add(Task(
-                uid = UUID.randomUUID().toString(),
-                title = "Finalizar o aplicativo",
-                done = false
-            ))
+                mTasksList.add(Task(
+                    uid = UUID.randomUUID().toString(),
+                    title = "Finalizar o aplicativo",
+                    done = false
+                ))
 
-            mTasksList.add(Task(
-                uid = UUID.randomUUID().toString(),
-                title = "Apresentar o aplicativo",
-                done = false
-            ))
+                mTasksList.add(Task(
+                    uid = UUID.randomUUID().toString(),
+                    title = "Apresentar o aplicativo",
+                    done = false
+                ))
+            }
+        }
+
+        enum class TaskType {
+            ALL, UNFINISHED, FINISHED
         }
     }
 }
