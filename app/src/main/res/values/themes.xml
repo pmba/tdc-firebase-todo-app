@@ -25,6 +25,12 @@
             @style/ShapeAppearance.App.SmallComponent
         </item>
     </style>
+    
+    <style name="Widget.App.IconFloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="backgroundTint">?attr/colorSurface</item>
+        <item name="elevation">0dp</item>
+        <item name="tint">?attr/colorControlNormal</item>
+    </style>
 
     <style name="WhiteCheck">
         <item name="colorAccent">?attr/colorPrimary</item>

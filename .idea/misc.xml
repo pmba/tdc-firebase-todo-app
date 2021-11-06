@@ -7,6 +7,7 @@
         <entry key="app/src/main/res/drawable/ic_baseline_check_24.xml" value="0.37395833333333334" />
         <entry key="app/src/main/res/drawable/ic_baseline_check_box_24.xml" value="0.37395833333333334" />
         <entry key="app/src/main/res/drawable/ic_baseline_check_box_outline_blank_24.xml" value="0.37395833333333334" />
+        <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.37447916666666664" />
         <entry key="app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.37395833333333334" />
         <entry key="app/src/main/res/drawable/ic_logo.xml" value="0.37447916666666664" />
         <entry key="app/src/main/res/drawable/list_header_background.xml" value="0.21614583333333334" />
@@ -21,6 +22,7 @@
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.3768518518518518" />
         <entry key="app/src/main/res/layout/fragment_new_task.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.3578125" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/layout/fragment_task.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/layout/fragment_task_item.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_task_list.xml" value="0.3578125" />
@@ -29,6 +31,7 @@
         <entry key="app/src/main/res/layout/fragment_tasks_list.xml" value="0.3578125" />
         <entry key="app/src/main/res/layout/fragment_unfinished_tasks.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/layout/header_navigation_drawer.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/profile_row.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.3578125" />
         <entry key="app/src/main/res/menu/modal_app_bar.xml" value="0.19947916666666668" />
         <entry key="app/src/main/res/menu/navigation_drawer.xml" value="0.2" />

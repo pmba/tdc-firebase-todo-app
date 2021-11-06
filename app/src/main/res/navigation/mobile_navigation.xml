@@ -56,7 +56,7 @@
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.example.tdcfirebaseapp.pages.profile.NotificationsFragment"
+        android:name="com.example.tdcfirebaseapp.pages.profile.ProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_profile" />
 </navigation>
