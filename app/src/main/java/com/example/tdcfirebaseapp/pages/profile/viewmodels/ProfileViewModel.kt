@@ -5,9 +5,22 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class ProfileViewModel : ViewModel() {
+    private val mUserName: MutableLiveData<String> = MutableLiveData()
+    private val mUserEmail: MutableLiveData<String> = MutableLiveData()
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
+    fun getName(): LiveData<String> = mUserName
+    fun getEmail(): LiveData<String> = mUserEmail
+
+    fun init() {
+        mUserName.value = "Lorem Ipsum"
+        mUserEmail.value = "loremipsum@gmail.com"
     }
-    val text: LiveData<String> = _text
+
+    fun logout() {
+        TODO()
+    }
+
+    companion object {
+        const val TAG = "ProfileViewModel"
+    }
 }

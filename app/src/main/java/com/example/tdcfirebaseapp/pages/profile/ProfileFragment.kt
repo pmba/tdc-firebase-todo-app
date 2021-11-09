@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.tdcfirebaseapp.databinding.FragmentProfileBinding
+import com.example.tdcfirebaseapp.pages.profile.dialogfragments.EditNameModalBottomSheet
 import com.example.tdcfirebaseapp.pages.profile.viewmodels.ProfileViewModel
 
 class ProfileFragment : Fragment() {
@@ -24,6 +25,38 @@ class ProfileFragment : Fragment() {
 
         mViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
 
+        setupLogoutButton()
+        setupNameCardView()
+
+        setupViewModel()
+
         return binding.root
+    }
+
+    private fun setupNameCardView() {
+        binding.profileNameCardView.setOnClickListener {
+            requireActivity().runOnUiThread {
+                EditNameModalBottomSheet(mViewModel)
+                    .show(parentFragmentManager, EditNameModalBottomSheet.TAG)
+            }
+        }
+    }
+
+    private fun setupLogoutButton() {
+        binding.logoutButton.setOnClickListener {
+            mViewModel.logout()
+        }
+    }
+
+    private fun setupViewModel() {
+        mViewModel.getName().observe(requireActivity()) { userName ->
+            binding.profileNameTextView.text = userName
+        }
+
+        mViewModel.getEmail().observe(requireActivity()) { userEmail ->
+            binding.profileEmailTextView.text = userEmail
+        }
+
+        mViewModel.init()
     }
 }

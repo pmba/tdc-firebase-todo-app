@@ -55,6 +55,7 @@ class EditTaskModalBottomSheet(
             val formattedDate = formatter.format(taskDate.time)
             binding.editTaskDateChip.text = formattedDate
 
+            taskBuilder.setDate(taskDate)
             showDateChip(true)
         } else {
             showDateChip(false)
