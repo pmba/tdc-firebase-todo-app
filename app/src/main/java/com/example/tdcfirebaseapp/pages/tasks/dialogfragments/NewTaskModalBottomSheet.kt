@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
+import com.example.tdcfirebaseapp.R
 import com.example.tdcfirebaseapp.databinding.FragmentNewTaskBinding
 import com.example.tdcfirebaseapp.pages.tasks.models.Task
 import com.example.tdcfirebaseapp.pages.tasks.viewmodels.TaskViewModel
+import com.example.tdcfirebaseapp.shared.utils.showSoftKeyboard
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
@@ -22,6 +25,11 @@ class NewTaskModalBottomSheet(
 
     private val taskBuilder: Task.Builder = Task.Builder()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.DialogStyle)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,6 +38,25 @@ class NewTaskModalBottomSheet(
         binding = FragmentNewTaskBinding.inflate(inflater, container, false)
 
         setupDatePicker()
+        setupCreateTaskButton()
+
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        requestInputFocus()
+    }
+
+    private fun requestInputFocus() {
+        requireActivity().let { activity ->
+            activity.runOnUiThread {
+                activity.showSoftKeyboard(binding.newTaskTitleTextField)
+            }
+        }
+    }
+
+    private fun setupCreateTaskButton() {
         binding.createNewTaskButton.setOnClickListener {
             val taskTitle = binding.newTaskTitleTextField.text.toString()
 
@@ -43,41 +70,40 @@ class NewTaskModalBottomSheet(
             viewModel.addNewTask(taskBuilder.build())
             dismiss()
         }
-
-        return binding.root
     }
 
     private fun setupDatePicker() {
-        binding.newTaskEndpointTextField.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                val calendarConstraint = CalendarConstraints.Builder()
-                    .setValidator(DateValidatorPointForward.now())
-                    .build()
+        binding.createNewTaskEndpointButton.setOnClickListener {
+            val calendarConstraint = CalendarConstraints.Builder()
+                .setValidator(DateValidatorPointForward.now())
+                .build()
 
-                val datePicker = MaterialDatePicker.Builder.datePicker()
-                    .setCalendarConstraints(calendarConstraint)
-                    .build()
+            val datePicker = MaterialDatePicker.Builder.datePicker()
+                .setCalendarConstraints(calendarConstraint)
+                .build()
 
-                val endpointTextField = binding.newTaskEndpointTextField
+            val endpointChip = binding.createNewTaskDateChip
 
-                datePicker.addOnPositiveButtonClickListener { timeInMillis ->
-                    val formatter = SimpleDateFormat("EEEE, dd 'de' MMMM", Locale.ROOT)
-                    val calendar = Calendar.getInstance()
-                    calendar.timeInMillis = timeInMillis
-                    calendar.add(Calendar.DAY_OF_YEAR, 1)
-                    val formattedDate = formatter.format(calendar.timeInMillis)
+            datePicker.addOnPositiveButtonClickListener { timeInMillis ->
+                val formatter = SimpleDateFormat("EEEE, dd 'de' MMMM", Locale.ROOT)
+                val calendar = Calendar.getInstance()
+                calendar.timeInMillis = timeInMillis
+                calendar.add(Calendar.DAY_OF_YEAR, 1)
+                val formattedDate = formatter.format(calendar.timeInMillis)
 
-                    endpointTextField.setText(formattedDate)
-                    endpointTextField.clearFocus()
+                endpointChip.text = formattedDate
+                endpointChip.visibility = View.VISIBLE
 
-                    taskBuilder.setDate(calendar.time)
-                }
-
-                datePicker.addOnCancelListener { endpointTextField.clearFocus() }
-                datePicker.addOnDismissListener { endpointTextField.clearFocus() }
-
-                datePicker.show(parentFragmentManager, TAG)
+                taskBuilder.setDate(calendar.time)
             }
+
+            datePicker.show(parentFragmentManager, TAG)
+        }
+
+        binding.createNewTaskDateChip.setOnCloseIconClickListener { chip ->
+            chip.visibility = View.GONE
+
+            taskBuilder.setDate(null)
         }
     }
 

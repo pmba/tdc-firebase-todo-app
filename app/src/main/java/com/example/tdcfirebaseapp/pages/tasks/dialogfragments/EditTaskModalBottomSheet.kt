@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import com.example.tdcfirebaseapp.R
 import com.example.tdcfirebaseapp.databinding.FragmentEditTaskBinding
 import com.example.tdcfirebaseapp.pages.tasks.models.Task
@@ -24,6 +25,11 @@ class EditTaskModalBottomSheet(
 
     private val taskBuilder: Task.Builder = Task.Builder()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.DialogStyle)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,38 +48,41 @@ class EditTaskModalBottomSheet(
     private fun setupTaskInfo() {
         binding.editTaskTitleTextField.setText(currentTask.title)
 
-        currentTask.date?.let { taskDate ->
+        val taskDate = currentTask.date
+
+        if (taskDate != null) {
             val formatter = SimpleDateFormat("EEEE, dd 'de' MMMM", Locale.ROOT)
             val formattedDate = formatter.format(taskDate.time)
-            binding.editTaskEndpointTextField.setText(formattedDate)
+            binding.editTaskDateChip.text = formattedDate
+
+            showDateChip(true)
+        } else {
+            showDateChip(false)
         }
     }
 
     private fun setupAppBar() {
         binding.topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.close_fragment -> {
+                R.id.remove_task -> {
                     dismiss()
+                    requireRemoveTask()
                     true
                 }
                 else -> false
             }
         }
+
+        binding.topAppBar.setNavigationOnClickListener {
+            dismiss()
+        }
     }
 
+
     private fun setupButtons() {
-        binding.deleteTaskButton.setOnClickListener {
-            dismiss()
-            viewModel.removeTask(currentTask.uid)
-        }
 
         binding.editTaskButton.setOnClickListener {
             val taskTitle = binding.editTaskTitleTextField.text.toString()
-
-            if (taskTitle.isBlank()) {
-                binding.editTaskEndpointTextInput.error = "Campo não pode ser vazio"
-                return@setOnClickListener
-            }
 
             taskBuilder.setUid(currentTask.uid)
             taskBuilder.setDone(currentTask.done)
@@ -85,37 +94,54 @@ class EditTaskModalBottomSheet(
         }
     }
 
+    private fun requireRemoveTask() {
+        viewModel.removeTask(currentTask.uid)
+    }
+
     private fun setupDatePicker() {
-        binding.editTaskEndpointTextField.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                val calendarConstraint = CalendarConstraints.Builder()
-                    .setValidator(DateValidatorPointForward.now())
-                    .build()
+        binding.editTaskEndpointCardView.setOnClickListener {
+            val calendarConstraint = CalendarConstraints.Builder()
+                .setValidator(DateValidatorPointForward.now())
+                .build()
 
-                val datePicker = MaterialDatePicker.Builder.datePicker()
-                    .setCalendarConstraints(calendarConstraint)
-                    .build()
+            val datePicker = MaterialDatePicker.Builder.datePicker()
+                .setCalendarConstraints(calendarConstraint)
+                .build()
 
-                val endpointTextField = binding.editTaskEndpointTextField
+            val endpointChip = binding.editTaskDateChip
 
-                datePicker.addOnPositiveButtonClickListener { timeInMillis ->
-                    val formatter = SimpleDateFormat("EEEE, dd 'de' MMMM", Locale.ROOT)
-                    val calendar = Calendar.getInstance()
-                    calendar.timeInMillis = timeInMillis
-                    calendar.add(Calendar.DAY_OF_YEAR, 1)
-                    val formattedDate = formatter.format(calendar.timeInMillis)
+            datePicker.addOnPositiveButtonClickListener { timeInMillis ->
+                val formatter = SimpleDateFormat("EEEE, dd 'de' MMMM", Locale.ROOT)
+                val calendar = Calendar.getInstance()
+                calendar.timeInMillis = timeInMillis
+                calendar.add(Calendar.DAY_OF_YEAR, 1)
+                val formattedDate = formatter.format(calendar.timeInMillis)
 
-                    endpointTextField.setText(formattedDate)
-                    endpointTextField.clearFocus()
+                endpointChip.text = formattedDate
+                showDateChip(true)
 
-                    taskBuilder.setDate(calendar.time)
-                }
-
-                datePicker.addOnCancelListener { endpointTextField.clearFocus() }
-                datePicker.addOnDismissListener { endpointTextField.clearFocus() }
-
-                datePicker.show(parentFragmentManager, NewTaskModalBottomSheet.TAG)
+                taskBuilder.setDate(calendar.time)
             }
+
+            datePicker.addOnCancelListener { endpointChip.clearFocus() }
+            datePicker.addOnDismissListener { endpointChip.clearFocus() }
+
+            datePicker.show(parentFragmentManager, NewTaskModalBottomSheet.TAG)
+        }
+
+        binding.editTaskDateChip.setOnCloseIconClickListener {
+            taskBuilder.setDate(null)
+            showDateChip(false)
+        }
+    }
+
+    private fun showDateChip(show: Boolean) {
+        if (show) {
+            binding.editTaskAddDateTextView.visibility = View.GONE
+            binding.editTaskDateChip.visibility = View.VISIBLE
+        } else {
+            binding.editTaskAddDateTextView.visibility = View.VISIBLE
+            binding.editTaskDateChip.visibility = View.GONE
         }
     }
 
