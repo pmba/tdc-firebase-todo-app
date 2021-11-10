@@ -16,6 +16,11 @@ class ProfileViewModel : ViewModel() {
         mUserEmail.value = "loremipsum@gmail.com"
     }
 
+    fun updateUserName(name: String) {
+        // Todo: Save to database
+        mUserName.value = name
+    }
+
     fun logout() {
         TODO()
     }

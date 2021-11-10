@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import com.example.tdcfirebaseapp.R
 import com.example.tdcfirebaseapp.databinding.FragmentEditTaskBinding
@@ -39,6 +40,7 @@ class EditTaskModalBottomSheet(
 
         setupAppBar()
         setupTaskInfo()
+        setupTextField()
         setupDatePicker()
         setupButtons()
 
@@ -59,6 +61,14 @@ class EditTaskModalBottomSheet(
             showDateChip(true)
         } else {
             showDateChip(false)
+        }
+    }
+
+    private fun setupTextField() {
+        binding.editTaskTitleTextField.addTextChangedListener { text ->
+            requireActivity().runOnUiThread {
+                binding.editTaskButton.isEnabled = text?.isNotBlank() ?: false
+            }
         }
     }
 
@@ -120,6 +130,8 @@ class EditTaskModalBottomSheet(
 
                 endpointChip.text = formattedDate
                 showDateChip(true)
+
+                binding.editTaskButton.isEnabled = true
 
                 taskBuilder.setDate(calendar.time)
             }

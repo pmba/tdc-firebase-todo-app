@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import com.example.tdcfirebaseapp.R
 import com.example.tdcfirebaseapp.databinding.FragmentEditNameBinding
@@ -29,11 +30,23 @@ class EditNameModalBottomSheet(
     ): View {
         binding = FragmentEditNameBinding.inflate(inflater, container, false)
 
-        binding.editNameTextField.setText(viewModel.getName().value)
+        setupTextField()
 
         setupSaveButton()
 
         return binding.root
+    }
+
+    private fun setupTextField() {
+        binding.editNameTextField.let { textField ->
+            textField.setText(viewModel.getName().value)
+
+            textField.addTextChangedListener { text ->
+                requireActivity().runOnUiThread {
+                    binding.editNameButton.isEnabled = text?.isNotBlank() ?: false
+                }
+            }
+        }
     }
 
     override fun onResume() {
@@ -51,6 +64,8 @@ class EditNameModalBottomSheet(
 
     private fun setupSaveButton() {
         binding.editNameButton.setOnClickListener {
+            val name = binding.editNameTextField.text.toString()
+            viewModel.updateUserName(name)
             dismiss()
         }
     }
