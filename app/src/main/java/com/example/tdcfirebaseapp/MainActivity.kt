@@ -11,6 +11,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.example.tdcfirebaseapp.databinding.ActivityMainBinding
 import com.example.tdcfirebaseapp.pages.auth.login.LoginActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
@@ -68,7 +69,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkForUserLoggedIn() {
-        val isUserLoggedIn = true
+        val isUserLoggedIn = FirebaseAuth.getInstance().currentUser != null
 
         if (!isUserLoggedIn) {
             val loginIntent = Intent(this, LoginActivity::class.java)
