@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.tdcfirebaseapp.shared.contracts.AuthContract
+import com.example.tdcfirebaseapp.shared.contracts.ViewModelContracts
 import com.example.tdcfirebaseapp.pages.auth.login.repositories.LoginRepository
 
 class LoginViewModel: ViewModel() {
@@ -21,7 +21,7 @@ class LoginViewModel: ViewModel() {
     fun loginWithEmailAndPassword(email: String, password: String) {
         mIsLoading.value = true
 
-        mRepo.loginWithEmailAndPassword(email, password, object : AuthContract.LoginResultListener {
+        mRepo.loginWithEmailAndPassword(email, password, object : ViewModelContracts.ResultListener {
             override fun onSuccess() {
                 mIsLoading.value = false
                 mHasErrors.value = null

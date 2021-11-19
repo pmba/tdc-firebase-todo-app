@@ -81,4 +81,10 @@ class MainActivity : AppCompatActivity() {
             }.launch(loginIntent)
         }
     }
+
+    fun requestAppReload() {
+        val newIntent = Intent(this, MainActivity::class.java)
+        navigateUpTo(newIntent)
+        startActivity(intent)
+    }
 }

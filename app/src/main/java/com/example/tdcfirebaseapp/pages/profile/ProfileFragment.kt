@@ -13,17 +13,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.tdcfirebaseapp.MainActivity
 import com.example.tdcfirebaseapp.databinding.FragmentProfileBinding
 import com.example.tdcfirebaseapp.pages.profile.dialogfragments.EditNameModalBottomSheet
 import com.example.tdcfirebaseapp.pages.profile.viewmodels.ProfileViewModel
+import com.example.tdcfirebaseapp.shared.contracts.ViewModelContracts
 import com.google.android.material.snackbar.Snackbar
 import java.lang.Exception
 
@@ -129,8 +129,23 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setupLogoutButton() {
-        binding.logoutButton.setOnClickListener {
-            mViewModel.logout()
+        requireActivity().runOnUiThread {
+            binding.logoutButton.setOnClickListener {
+                mViewModel.logout(object : ViewModelContracts.ResultListener {
+                    override fun onSuccess() {
+                        val mainActivity = requireActivity() as MainActivity
+                        mainActivity.requestAppReload()
+                    }
+
+                    override fun onFailure(exception: Exception) {
+                        Snackbar.make(
+                            binding.root,
+                            "Logout Failed: ${exception.message}",
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    }
+                })
+            }
         }
     }
 

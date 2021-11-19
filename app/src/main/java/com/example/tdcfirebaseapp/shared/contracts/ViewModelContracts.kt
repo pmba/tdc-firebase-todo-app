@@ -2,8 +2,8 @@ package com.example.tdcfirebaseapp.shared.contracts
 
 import java.lang.Exception
 
-interface AuthContract {
-    interface LoginResultListener {
+interface ViewModelContracts {
+    interface ResultListener {
         fun onSuccess()
         fun onFailure(exception: Exception)
     }

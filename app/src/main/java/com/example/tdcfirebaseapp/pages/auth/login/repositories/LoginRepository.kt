@@ -1,6 +1,6 @@
 package com.example.tdcfirebaseapp.pages.auth.login.repositories
 
-import com.example.tdcfirebaseapp.shared.contracts.AuthContract
+import com.example.tdcfirebaseapp.shared.contracts.ViewModelContracts
 import com.google.firebase.auth.FirebaseAuth
 import java.lang.Exception
 
@@ -12,7 +12,7 @@ class LoginRepository {
         fun loginWithEmailAndPassword(
             email: String,
             password: String,
-            listener: AuthContract.LoginResultListener
+            listener: ViewModelContracts.ResultListener
         ) {
             if (email.isNotBlank() && password.isNotBlank()) {
                 // Realiza login com email e senha

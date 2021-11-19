@@ -5,8 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.tdcfirebaseapp.pages.auth.forgotpassword.repositories.ForgotPasswordRepository
-import com.example.tdcfirebaseapp.pages.auth.login.viewmodels.LoginViewModel
-import com.example.tdcfirebaseapp.shared.contracts.AuthContract
+import com.example.tdcfirebaseapp.shared.contracts.ViewModelContracts
 
 class ForgotPasswordViewModel: ViewModel() {
     private val mIsLoading: MutableLiveData<Boolean> = MutableLiveData(false)
@@ -22,7 +21,7 @@ class ForgotPasswordViewModel: ViewModel() {
     fun sendPasswordResetEmail(email: String) {
         mIsLoading.value = true
 
-        mRepo.sendPasswordResetEmail(email, object : AuthContract.LoginResultListener {
+        mRepo.sendPasswordResetEmail(email, object : ViewModelContracts.ResultListener {
             override fun onSuccess() {
                 mIsLoading.value = false
                 mHasErrors.value = null

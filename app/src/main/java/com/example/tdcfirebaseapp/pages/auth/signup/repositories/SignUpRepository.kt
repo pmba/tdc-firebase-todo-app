@@ -1,6 +1,6 @@
 package com.example.tdcfirebaseapp.pages.auth.signup.repositories
 
-import com.example.tdcfirebaseapp.shared.contracts.AuthContract
+import com.example.tdcfirebaseapp.shared.contracts.ViewModelContracts
 import java.lang.Exception
 
 class SignUpRepository {
@@ -9,7 +9,7 @@ class SignUpRepository {
         fun signUpWithEmailAndPassword(
             email: String,
             password: String,
-            listener: AuthContract.LoginResultListener
+            listener: ViewModelContracts.ResultListener
         ) {
             if (email.isNotBlank() && password.isNotBlank()) {
                 listener.onSuccess()
