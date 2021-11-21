@@ -43,10 +43,8 @@ class ProfileFragment : Fragment() {
 
         requestLauncher = registerForActivityResult(RequestPermission()) { isGranted ->
             if (isGranted) {
-                Log.d(TAG, "PERMISSION_IS_GRANTED")
                 launchCameraIntent()
             } else {
-                Log.d(TAG, "PERMISSION_DENIED")
                 Toast.makeText(requireContext(), "Permission denied.", Toast.LENGTH_SHORT).show()
             }
         }
@@ -158,7 +156,11 @@ class ProfileFragment : Fragment() {
             binding.profileEmailTextView.text = userEmail
         }
 
-        mViewModel.init()
+        mViewModel.init(requireActivity()) { initializationError ->
+            if (initializationError != null) {
+                requireActivity().onBackPressed()
+            }
+        }
     }
 
     private fun launchCameraIntent() {

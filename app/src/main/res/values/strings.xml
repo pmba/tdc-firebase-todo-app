@@ -29,4 +29,5 @@
     <string name="save_task_hint">Salvar</string>
     <string name="delete_task_hint">Remover</string>
     <string name="close_fragment_hint">Fechar</string>
-    </resources>
+    <string name="anonimous_string">Anônimo</string>
+</resources>
