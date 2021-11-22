@@ -38,6 +38,11 @@ class MainActivity : AppCompatActivity() {
         setupDrawerLayout()
     }
 
+    override fun onResume() {
+        super.onResume()
+        setupNavHeaderInfo()
+    }
+
     private fun setupDrawerLayout() {
         val navigationView = binding.navigationView
         val toolbar = binding.topAppBar
@@ -58,11 +63,11 @@ class MainActivity : AppCompatActivity() {
 
         toolbar.setupWithNavController(navController, appBarConfiguration)
         navigationView.setCheckedItem(R.id.navigation_tasks)
-
-        setupNavHeaderInfo(navigationView)
     }
 
-    private fun setupNavHeaderInfo(navigationView: NavigationView) {
+    private fun setupNavHeaderInfo() {
+        val navigationView = binding.navigationView
+
         val headerView = navigationView.getHeaderView(0)
         val userNameView = headerView.findViewById<TextView>(R.id.user_name_header)
         val userEmailView = headerView.findViewById<TextView>(R.id.user_email_header)
