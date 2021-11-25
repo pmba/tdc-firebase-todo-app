@@ -42,6 +42,12 @@ class TaskRecyclerViewAdapter(
             }
         }
 
+        holder.checkbox.setOnCheckedChangeListener { _, checked ->
+            context.runOnUiThread {
+                contract.onTaskStateChanged(item.uid, checked)
+            }
+        }
+
         holder.title.text = item.title
         holder.checkbox.isChecked = item.done
 

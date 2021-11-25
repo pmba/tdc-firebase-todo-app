@@ -15,20 +15,18 @@ class TaskViewModel : ViewModel() {
 
     private val mRepo = TaskRepository.Instance
 
+    companion object {
+        const val TAG = "TaskViewModel"
+    }
+
+    fun isLoading(): LiveData<Boolean> = mIsLoading
+    fun getTasks(): LiveData<ArrayList<Task>> = mTasksData
+
     fun init(typesToLoad: TaskType = TaskType.ALL) {
-        if (mTasksData != null) {
-            return
-        }
-
-        /* mTasks = mRepo.getTasks(typesToLoad) { tasksList ->
-            Log.d("TaskViewModel", tasksList.toString())
-
-            mTasks.value.
-            mTasks!!.postValue(tasksList)
-        } */
+        mIsLoading.value = true
 
         mRepo.getTasks(typesToLoad) { tasksList ->
-            Log.d("TaskViewModel", tasksList.toString())
+            Log.d(TAG, tasksList.toString())
 
             mTasksData.value!!.let { tasks ->
                 tasks.clear()
@@ -36,35 +34,50 @@ class TaskViewModel : ViewModel() {
             }
 
             mTasksData.postValue(mTasksData.value)
+            mIsLoading.postValue(false)
         }
     }
 
-    fun isLoading(): LiveData<Boolean> = mIsLoading
-    fun getTasks(): LiveData<ArrayList<Task>> = mTasksData
-
-    fun addNewTask(task: Task) {
+    fun addNewTask(userTask: Task) {
         mIsLoading.value = true
 
-        val currentTasks = mRepo.addNewTask(task)
-        mTasksData.value = currentTasks
-        mIsLoading.value = false
+        mRepo.addNewTask(userTask) { task ->
+            if (!task.isSuccessful) {
+                Log.e(TAG, "An error occurred while creating new task : ${task.exception}")
+            }
+
+            mIsLoading.postValue(false)
+        }
     }
 
     fun removeTask(uid: String) {
         mIsLoading.value = true
 
-        val currentTasks = mRepo.removeTask(uid)
-        mTasksData.value = currentTasks
+        mRepo.removeTask(uid) { task ->
+            if (!task.isSuccessful) {
+                Log.e(TAG, "An error occurred while deleting task(uid=$uid) : ${task.exception}")
+            }
 
-        mIsLoading.value = false
+            mIsLoading.postValue(false)
+        }
     }
 
-    fun updateTask(uid: String, task: Task) {
+    fun updateTask(uid: String, userTask: Task) {
         mIsLoading.value = true
 
-        val currentTasks = mRepo.updateTask(uid, task)
-        mTasksData.value = currentTasks
+        mRepo.updateTask(uid, userTask) { task ->
+            if (!task.isSuccessful) {
+                Log.e(TAG, "An error occurred while updating task(uid=$uid) : ${task.exception}")
+            }
 
-        mIsLoading.value = false
+            mIsLoading.postValue(false)
+        }
+    }
+
+    fun updateTaskState(uid: String, done: Boolean) {
+        mRepo.updateTaskState(uid, done) { exception ->
+            Log.e(TAG, "An error occurred while updating task(uid=$uid) state to (done=$done): " +
+                    "$exception")
+        }
     }
 }

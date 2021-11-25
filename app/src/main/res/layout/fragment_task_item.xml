@@ -54,6 +54,7 @@
             app:chipBackgroundColor="?attr/colorSurface"
             app:chipStrokeColor="?attr/colorControlNormal"
             app:chipStrokeWidth="1dp"
+            android:clickable="false"
             app:layout_constraintStart_toEndOf="@+id/item_checkbox"
             app:layout_constraintTop_toBottomOf="@+id/task_title" />
     </androidx.constraintlayout.widget.ConstraintLayout>

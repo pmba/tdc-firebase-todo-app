@@ -97,6 +97,8 @@
                     app:chipBackgroundColor="?attr/colorSurface"
                     app:chipStrokeColor="?attr/colorControlNormal"
                     app:chipStrokeWidth="1dp"
+                    app:checkedIconEnabled="false"
+                    android:clickable="false"
                     app:closeIcon="@drawable/ic_baseline_close_24"/>
 
             </LinearLayout>

@@ -19,6 +19,7 @@ import com.example.tdcfirebaseapp.pages.tasks.repositories.TaskRepository
 import com.example.tdcfirebaseapp.pages.tasks.repositories.TaskRepository.Instance.TaskType
 import com.example.tdcfirebaseapp.pages.tasks.viewmodels.TaskViewModel
 import com.example.tdcfirebaseapp.shared.contracts.TaskAdapterContract
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import kotlin.properties.Delegates
 
 class TaskFragment : Fragment(), TaskAdapterContract {
@@ -27,6 +28,7 @@ class TaskFragment : Fragment(), TaskAdapterContract {
 
     private lateinit var mAdapter: TaskRecyclerViewAdapter
     private lateinit var mRecyclerView: RecyclerView
+    private lateinit var mProgressIndicator: CircularProgressIndicator
 
     private lateinit var mViewModel: TaskViewModel
 
@@ -49,6 +51,7 @@ class TaskFragment : Fragment(), TaskAdapterContract {
         binding = FragmentTaskBinding.inflate(inflater, container, false)
 
         mRecyclerView = binding.taskListRecyclerView
+        mProgressIndicator = binding.taskProgressIndicator
 
         mViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
 
@@ -73,6 +76,10 @@ class TaskFragment : Fragment(), TaskAdapterContract {
             Log.d(TAG, "getTasks().observe : $tasks")
             mRecyclerView.setItemViewCacheSize(tasks.size)
             mAdapter.notifyDataSetChanged()
+        }
+
+        mViewModel.isLoading().observe(requireActivity()) { isLoading ->
+            mProgressIndicator.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
     }
 
@@ -103,6 +110,10 @@ class TaskFragment : Fragment(), TaskAdapterContract {
     override fun onEditRequest(task: Task) {
         EditTaskModalBottomSheet(mViewModel, task)
             .show(parentFragmentManager, EditTaskModalBottomSheet.TAG)
+    }
+
+    override fun onTaskStateChanged(uid: String, done: Boolean) {
+        mViewModel.updateTaskState(uid, done)
     }
 
     companion object {
