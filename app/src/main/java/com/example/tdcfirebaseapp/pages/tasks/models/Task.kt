@@ -1,13 +1,17 @@
 package com.example.tdcfirebaseapp.pages.tasks.models
 
+import com.google.firebase.database.Exclude
 import java.util.*
 
 class Task(
-    val uid: String,
+    @get:Exclude var uid: String,
     val title: String,
     var done: Boolean,
     var date: Date? = null,
 ) {
+
+    @Suppress("unused")
+    constructor(): this("", "", false)
 
     class Builder {
         private var mUid: String? = null
@@ -31,6 +35,6 @@ class Task(
     }
 
     override fun toString(): String {
-        return "(title=$title, done=$done, date=$date)"
+        return "(uid=$uid, title=$title, done=$done, date=$date)"
     }
 }

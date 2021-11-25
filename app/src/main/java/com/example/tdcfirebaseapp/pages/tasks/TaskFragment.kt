@@ -2,6 +2,7 @@ package com.example.tdcfirebaseapp.pages.tasks
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -69,6 +70,7 @@ class TaskFragment : Fragment(), TaskAdapterContract {
     @SuppressLint("NotifyDataSetChanged")
     private fun setupViewModel() {
         mViewModel.getTasks().observe(requireActivity()) { tasks ->
+            Log.d(TAG, "getTasks().observe : $tasks")
             mRecyclerView.setItemViewCacheSize(tasks.size)
             mAdapter.notifyDataSetChanged()
         }
