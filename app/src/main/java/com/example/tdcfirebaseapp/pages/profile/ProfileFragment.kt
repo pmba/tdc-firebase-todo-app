@@ -20,11 +20,14 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.tdcfirebaseapp.MainActivity
+import com.example.tdcfirebaseapp.R
 import com.example.tdcfirebaseapp.databinding.FragmentProfileBinding
 import com.example.tdcfirebaseapp.pages.profile.dialogfragments.EditNameModalBottomSheet
 import com.example.tdcfirebaseapp.pages.profile.viewmodels.ProfileViewModel
 import com.example.tdcfirebaseapp.shared.contracts.ViewModelContracts
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import java.lang.Exception
 
 class ProfileFragment : Fragment() {
@@ -61,6 +64,7 @@ class ProfileFragment : Fragment() {
                             val bitmap = BitmapFactory.decodeStream(inputStream)
                             profileImageView.setImageBitmap(bitmap)
 
+                            mViewModel.uploadProfileImage(bitmap)
                         } catch (exception: Exception) {
                             Toast.makeText(requireContext(), exception.message, Toast.LENGTH_SHORT).show()
                         }
@@ -149,11 +153,41 @@ class ProfileFragment : Fragment() {
 
     private fun setupViewModel() {
         mViewModel.getName().observe(requireActivity()) { userName ->
-            binding.profileNameTextView.text = userName
+            requireActivity().runOnUiThread {
+                binding.profileNameTextView.text = userName
+            }
         }
 
         mViewModel.getEmail().observe(requireActivity()) { userEmail ->
-            binding.profileEmailTextView.text = userEmail
+            requireActivity().runOnUiThread {
+                binding.profileEmailTextView.text = userEmail
+            }
+        }
+
+        mViewModel.getProfileImage().observe(requireActivity()) { imageUri ->
+            requireActivity().runOnUiThread {
+                binding.progressIndicator.visibility = View.VISIBLE
+                Picasso.get()
+                    .load(imageUri)
+                    .placeholder(R.drawable.avatar_placeholder)
+                    .error(R.drawable.avatar_placeholder)
+                    .into(binding.profileImageView, object : Callback {
+                        override fun onSuccess() {
+                            binding.progressIndicator.visibility = View.GONE
+                        }
+
+                        override fun onError(e: Exception?) {
+                            binding.progressIndicator.visibility = View.GONE
+                        }
+                    })
+            }
+        }
+
+        mViewModel.getIsUploadingImage().observe(requireActivity()) { isLoadingImage ->
+            requireActivity().runOnUiThread {
+                binding.changeProfileImageButton.isEnabled = !isLoadingImage
+                binding.progressIndicator.visibility = if (isLoadingImage) View.VISIBLE else View.GONE
+            }
         }
 
         mViewModel.init(requireActivity()) { initializationError ->

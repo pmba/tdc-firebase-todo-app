@@ -12,11 +12,21 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progress_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"/>
+
         <ImageView
             android:id="@+id/profile_image_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/fake_person"
+            android:src="@drawable/avatar_placeholder"
             android:scaleType="centerCrop"
             android:layout_weight="0.6"/>
 
@@ -172,6 +182,6 @@
         app:layout_anchor="@id/profile_image_view"
         android:backgroundTint="?attr/colorPrimary"
         app:tint="?attr/colorOnPrimary"
-        app:layout_anchorGravity="bottom|right|end"/>
+        app:layout_anchorGravity="bottom|right|end" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
