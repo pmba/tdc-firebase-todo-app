@@ -1,21 +1,48 @@
 package com.example.tdcfirebaseapp.pages.tasks
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.tdcfirebaseapp.R
+import androidx.recyclerview.widget.RecyclerView
 import com.example.tdcfirebaseapp.databinding.FragmentTaskBinding
-import com.example.tdcfirebaseapp.pages.tasks.adapters.TodoTaskRecyclerViewAdapter
+import com.example.tdcfirebaseapp.pages.tasks.adapters.TaskRecyclerViewAdapter
+import com.example.tdcfirebaseapp.pages.tasks.dialogfragments.EditTaskModalBottomSheet
+import com.example.tdcfirebaseapp.pages.tasks.dialogfragments.NewTaskModalBottomSheet
 import com.example.tdcfirebaseapp.pages.tasks.models.Task
-import com.google.android.material.appbar.MaterialToolbar
+import com.example.tdcfirebaseapp.pages.tasks.repositories.TaskRepository
+import com.example.tdcfirebaseapp.pages.tasks.repositories.TaskRepository.Instance.TaskType
+import com.example.tdcfirebaseapp.pages.tasks.viewmodels.TaskViewModel
+import com.example.tdcfirebaseapp.shared.contracts.TaskAdapterContract
+import com.google.android.material.progressindicator.CircularProgressIndicator
+import kotlin.properties.Delegates
 
-class TaskFragment : Fragment() {
+class TaskFragment : Fragment(), TaskAdapterContract {
 
     private lateinit var binding: FragmentTaskBinding
+
+    private lateinit var mAdapter: TaskRecyclerViewAdapter
+    private lateinit var mRecyclerView: RecyclerView
+    private lateinit var mProgressIndicator: CircularProgressIndicator
+
+    private lateinit var mViewModel: TaskViewModel
+
+    private var showAllTasks by Delegates.notNull<Boolean>()
+    private var showOnlyTasks: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        arguments?.let { args ->
+            showAllTasks = args.getBoolean("showAllTasks")
+            showOnlyTasks = args.getString("showOnlyTasks")
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,23 +50,73 @@ class TaskFragment : Fragment() {
     ): View {
         binding = FragmentTaskBinding.inflate(inflater, container, false)
 
+        mRecyclerView = binding.taskListRecyclerView
+        mProgressIndicator = binding.taskProgressIndicator
+
+        mViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
+
+        val typesToLoad = when {
+            showAllTasks -> TaskType.ALL
+            showOnlyTasks == "finished" -> TaskType.FINISHED
+            else -> TaskType.UNFINISHED
+        }
+
+        mViewModel.init(typesToLoad)
+
         initRecyclerView()
+        setupButtons()
+        setupViewModel()
 
         return binding.root
     }
 
-    private fun initRecyclerView() {
-        val tasks = IntArray(20).map { index ->
-            Task(
-                title = "Atividade $index",
-                done = false
-            )
+    @SuppressLint("NotifyDataSetChanged")
+    private fun setupViewModel() {
+        mViewModel.getTasks().observe(requireActivity()) { tasks ->
+            Log.d(TAG, "getTasks().observe : $tasks")
+            mRecyclerView.setItemViewCacheSize(tasks.size)
+            mAdapter.notifyDataSetChanged()
         }
 
-        val recyclerView = binding.taskListRecyclerView
-        with(recyclerView) {
-            layoutManager = LinearLayoutManager(context)
-            adapter = TodoTaskRecyclerViewAdapter(tasks)
+        mViewModel.isLoading().observe(requireActivity()) { isLoading ->
+            mProgressIndicator.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
+    }
+
+    private fun initRecyclerView() {
+        mAdapter = TaskRecyclerViewAdapter(
+            mViewModel.getTasks().value!!,
+            this,
+            requireActivity()
+        )
+
+        with(mRecyclerView) {
+            layoutManager = LinearLayoutManager(context).apply {
+                reverseLayout = true
+                stackFromEnd = true
+            }
+
+            adapter = mAdapter
+        }
+    }
+
+    private fun setupButtons() {
+        binding.newTaskButton.setOnClickListener {
+            NewTaskModalBottomSheet(mViewModel)
+                .show(parentFragmentManager, NewTaskModalBottomSheet.TAG)
+        }
+    }
+
+    override fun onEditRequest(task: Task) {
+        EditTaskModalBottomSheet(mViewModel, task)
+            .show(parentFragmentManager, EditTaskModalBottomSheet.TAG)
+    }
+
+    override fun onTaskStateChanged(uid: String, done: Boolean) {
+        mViewModel.updateTaskState(uid, done)
+    }
+
+    companion object {
+        const val TAG = "TaskFragment"
     }
 }

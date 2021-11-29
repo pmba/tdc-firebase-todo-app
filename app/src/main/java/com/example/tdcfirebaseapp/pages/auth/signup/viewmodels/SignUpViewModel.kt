@@ -3,7 +3,7 @@ package com.example.tdcfirebaseapp.pages.auth.signup.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.tdcfirebaseapp.shared.contracts.AuthContract
+import com.example.tdcfirebaseapp.shared.contracts.ViewModelContracts
 import com.example.tdcfirebaseapp.pages.auth.signup.repositories.SignUpRepository
 import java.lang.Exception
 
@@ -21,7 +21,7 @@ class SignUpViewModel: ViewModel() {
     fun signUpWithEmailAndPassword(email: String, password: String) {
         mIsLoading.value = true
 
-        mRepo.signUpWithEmailAndPassword(email, password, object : AuthContract.LoginResultListener {
+        mRepo.signUpWithEmailAndPassword(email, password, object : ViewModelContracts.ResultListener {
             override fun onSuccess() {
                 mIsLoading.value = false
                 mHasErrors.value = null

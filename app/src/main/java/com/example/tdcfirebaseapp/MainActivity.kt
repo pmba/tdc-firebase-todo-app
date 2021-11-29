@@ -2,6 +2,8 @@ package com.example.tdcfirebaseapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -11,7 +13,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.example.tdcfirebaseapp.databinding.ActivityMainBinding
 import com.example.tdcfirebaseapp.pages.auth.login.LoginActivity
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import org.w3c.dom.Text
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,6 +38,11 @@ class MainActivity : AppCompatActivity() {
         setupDrawerLayout()
     }
 
+    override fun onResume() {
+        super.onResume()
+        setupNavHeaderInfo()
+    }
+
     private fun setupDrawerLayout() {
         val navigationView = binding.navigationView
         val toolbar = binding.topAppBar
@@ -45,7 +54,8 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_tasks,
-                R.id.navigation_done_tasks,
+                R.id.navigation_unfinished_tasks,
+                R.id.navigation_finished_tasks,
                 R.id.navigation_profile
             ),
             drawerLayout
@@ -53,6 +63,29 @@ class MainActivity : AppCompatActivity() {
 
         toolbar.setupWithNavController(navController, appBarConfiguration)
         navigationView.setCheckedItem(R.id.navigation_tasks)
+    }
+
+    private fun setupNavHeaderInfo() {
+        val navigationView = binding.navigationView
+
+        val headerView = navigationView.getHeaderView(0)
+        val userNameView = headerView.findViewById<TextView>(R.id.user_name_header)
+        val userEmailView = headerView.findViewById<TextView>(R.id.user_email_header)
+
+        val fbUser = FirebaseAuth.getInstance().currentUser
+
+        if (fbUser != null) {
+            userNameView.text = if (fbUser.displayName.isNullOrBlank()) {
+                getString(R.string.anonimous_string)
+            } else fbUser.displayName
+
+            userEmailView.text = fbUser.email
+            userEmailView.visibility = View.VISIBLE
+            userNameView.visibility = View.VISIBLE
+        } else {
+            userEmailView.visibility = View.GONE
+            userNameView.visibility = View.GONE
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -68,7 +101,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkForUserLoggedIn() {
-        FirebaseAuth.getInstance().signOut()
         val isUserLoggedIn = FirebaseAuth.getInstance().currentUser != null
 
         if (!isUserLoggedIn) {
@@ -80,5 +112,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }.launch(loginIntent)
         }
+    }
+
+    fun requestAppReload() {
+        val newIntent = Intent(this, MainActivity::class.java)
+        navigateUpTo(newIntent)
+        startActivity(intent)
     }
 }

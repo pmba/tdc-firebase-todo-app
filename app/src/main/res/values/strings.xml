@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">TDC Firebase App</string>
     <string name="title_tasks">Tarefas</string>
+    <string name="title_tasks_all">Todas</string>
     <string name="title_tasks_pending">Pendentes</string>
     <string name="title_tasks_done">Concluídas</string>
     <string name="title_account">Conta</string>
@@ -20,4 +21,13 @@
     <string name="description_forgot_password">Entre com o email cadastrado, enviaremos um link de redefinição de senha para o seu email</string>
     <string name="title_forgot_password_dialog">Quase lá</string>
     <string name="message_forgot_password_dialog">Enviamos um email para redefinição de senha para seu email, por favor cheque sua caixa de entrada.</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="new_task_title_hint">Nova Tarefa</string>
+    <string name="new_task_endpoint_hint">Prazo</string>
+    <string name="create_new_task_hint">Salvar</string>
+    <string name="new_task_endpoint_helper">Deixar em branco caso não tenha prazo determinado</string>
+    <string name="save_task_hint">Salvar</string>
+    <string name="delete_task_hint">Remover</string>
+    <string name="close_fragment_hint">Fechar</string>
+    <string name="anonimous_string">Anônimo</string>
 </resources>

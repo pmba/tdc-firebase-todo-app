@@ -1,68 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<com.google.android.material.card.MaterialCardView xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/task_card_view"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
-    android:minHeight="64dp">
+    android:clickable="true"
+    android:focusable="true"
+    app:strokeColor="@null"
+    app:cardElevation="0dp"
+    app:cardCornerRadius="0dp">
 
-    <View
-        android:id="@+id/divider"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_below="@+id/mtrl_list_item_secondary_text"
-        android:layout_alignStart="@+id/mtrl_list_item_secondary_text"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="16dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/task_title"
-        app:layout_constraintTop_toBottomOf="@+id/mtrl_list_item_secondary_text" />
-
-    <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/item_checkbox"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:minWidth="0dp"
-        android:minHeight="0dp"
-        android:text=""
-        android:theme="@style/WhiteCheck"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/task_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:minHeight="64dp">
 
-    <TextView
-        android:id="@+id/task_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/item_checkbox"
-        android:maxLines="1"
-        android:paddingTop="16dp"
-        android:paddingEnd="16dp"
-        android:text="Atividade"
-        android:textAppearance="?attr/textAppearanceBody1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/item_checkbox"
-        app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/item_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text=""
+            android:theme="@style/WhiteCheck"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/task_title" />
 
-    <TextView
-        android:id="@+id/mtrl_list_item_secondary_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/task_title"
-        android:layout_gravity="center_vertical"
-        android:layout_toEndOf="@id/item_checkbox"
-        android:maxLines="2"
-        android:paddingEnd="16dp"
-        android:text="Segunda, 24 de dezembro"
-        android:textAppearance="?attr/textAppearanceCaption"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/task_title"
-        app:layout_constraintTop_toBottomOf="@+id/task_title" />
+        <TextView
+            android:id="@+id/task_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp"
+            android:text="Tarefa"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/item_checkbox"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/task_date_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Segunda, 24 de dezembro"
+            android:visibility="visible"
+            app:chipBackgroundColor="?attr/colorSurface"
+            app:chipStrokeColor="?attr/colorControlNormal"
+            app:chipStrokeWidth="1dp"
+            android:clickable="false"
+            app:layout_constraintStart_toEndOf="@+id/item_checkbox"
+            app:layout_constraintTop_toBottomOf="@+id/task_title" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
